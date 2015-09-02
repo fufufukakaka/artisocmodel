@@ -1,0 +1,11 @@
+if my.labor == true then
+	my.consumption = my.consumption + 14070
+else
+	my.conumption = my.consumption + 7338
+end if
+if my.labor == true then
+	my.free = my.free + ( 8 - abs(my.morestep) ) * 1407
+else
+	my.free = my.free + ( 10 - abs(my.morestep) ) * 733
+end if
+my.utilize = my.consumption^1/2 * my.free^1/2

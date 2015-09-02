@@ -1,0 +1,27 @@
+dim y as agtset
+dim m as agtset
+dim o as agtset
+dim human as agtset
+dim one as agt
+//’¥ÅƒV[ƒNƒGƒ“ƒX
+/*
+makeoneagtsetaroundown(y, 100,  universe.triage.young, false)
+makeoneagtsetaroundown(m, 100, universe.triage.middle, false)
+makeoneagtsetaroundown(o, 100, universe.triage.old, false)
+mergeagtset(human,y)
+mergeagtset(human,m)
+mergeagtset(human,o) */
+/* 
+if getcountstep() mod 500 == 0 then
+	for each one in human
+		if one.salary < ‹K’è’l1 then
+			one.consumption = one.consumption - ’¥ÅŠz1
+		elseif one.salary < ‹K’è’l2 then
+			one.consumption = one.consumption - ’¥ÅŠz2
+	...ˆÈ‰º‚±‚Ì‘€ì‚ğ‹K’è’l6‚Ü‚Åì‚éB’l‚É‚Â‚¢‚Ä‚Íevernote‚É“Y•t‚µ‚½‘—¿‚ğQÆB 
+	next one
+end if
+*/
+
+//‹´‚Ì“_ŒŸ‹y‚ÑC—A”j‰óƒV[ƒNƒGƒ“ƒX
+/* to be continued...*/

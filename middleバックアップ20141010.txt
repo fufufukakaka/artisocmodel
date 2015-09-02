@@ -1,0 +1,55 @@
+dim neighbor as agtset //一時変数の設定
+dim neighbor1 as agtset
+dim neighbor2 as agtset
+dim neighbor3 as agtset
+dim target as agt
+dim target1 as agt
+dim num as integer
+dim one as agt
+forward(3)
+if forward(3) <> -1 then
+     turn(180)
+end if
+if my.happy == 1 then //家に帰る
+     turn(rnd()* 20 - 10)
+     makeallagtsetaroundown(neighbor, 3, false)
+     num = countagtset(neighbor)
+     if num >= 1 then
+          target = getagt(neighbor, int(rnd() * num))
+               if target.ID == my.ID and target.home == 2 then
+                         my.happy = 0
+               else
+                    makeoneagtsetaroundown(neighbor1, 100, universe.triage.homem, false)
+                    for each one in neighbor1
+                         if one.ID == my.ID then
+                              my.Direction = getdirection(my.X, my.Y, one.x, one.y, universe.triage)
+                              forward(3)
+                              if measuredistance(my.X, my.Y, one.x, one.y, universe.triage) <=  3 then
+                                   my.happy = 0
+                                   my.Direction = 180
+                              end if
+                         end if
+                    next one
+               end if
+     end if
+elseif my.happy == 0 and my.labor == false then //消費地に行く
+forward(3)
+turn(rnd()* 20 - 10)
+     makeoneagtsetaroundown(neighbor2, 1, universe.triage.consumption,  false)
+     num = countagtset(neighbor2)
+     if num >= 1 then
+          target = getagt(neighbor2, int(rnd() * num))
+          my.happy = my.happy + 1
+          universe.hapsum = universe.hapsum + my.happy
+     end if
+elseif my.happy == 0 and my.labor == true then //オフィスに働きに行く
+forward(3)
+turn(rnd()* 20 - 10)
+     makeoneagtsetaroundown(neighbor3, 1, universe.triage.office,  false)
+     num = countagtset(neighbor3)
+     if num >= 1 then
+          target = getagt(neighbor3, int(rnd() * num))
+          my.happy = my.happy + 1
+          universe.hapsum = universe.hapsum + my.happy
+     end if
+end if
