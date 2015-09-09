@@ -1,8 +1,15 @@
 makeoneagtsetaroundown(findbridge, 100, universe.triage.bridge, false)
-universe.numberofbridge = countagtset(findbridge) 
+
+//橋のコアを数える
+for each check in findbridge
+		if check.bridgecore == 1 then //耐久値が0なら撤去する
+			universe.numberbridge = universe.numberofbridge + 1
+            AddAgt(My.findcore,check)//コアを認識する
+        end if
+next check
+//橋を点検する
 if getcountstep() Mod 250 == 0 then
-	makeoneagtsetaroundown(findbridge, 100, universe.triage.bridge, false)
-	for each check in findbridge
+	for each check in My.findcore
 		if check.strength == 0 then //耐久値が0なら撤去する
 			killagt(check)
 		else
