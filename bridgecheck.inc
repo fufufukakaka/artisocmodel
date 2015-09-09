@@ -1,9 +1,9 @@
-makeoneagtsetaroundown(findbridge, 100, universe.triage.bridge, false)
+makeoneagtsetaroundown(findbridge, 1000, universe.triage.newbridge, false)
 
 //橋のコアを数える
 for each check in findbridge
-		if check.bridgecore == 1 then //耐久値が0なら撤去する
-			universe.numberbridge = universe.numberofbridge + 1
+		if check.bridgecore == 1 then 
+			universe.numberofbridge = universe.numberofbridge + 1
             AddAgt(My.findcore,check)//コアを認識する
         end if
 next check

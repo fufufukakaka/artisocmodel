@@ -187,6 +187,7 @@ UNIVERSE {
             Dim oo(0, 0) As Double = (0.0);
             Dim breaknumber(0, 0) As Integer = (0);
             Dim criteria(0, 0) As Double = (0.0);
+            Dim findcore(0, 0) As AgtSet = ();
         }
         AgtType altyoung(0, 0)[0] {
             Dim ID(0, 0) As Integer = (0);
@@ -228,11 +229,31 @@ UNIVERSE {
             Dim dist(0, 0) As Integer = (0);
         }
         AgtType newbridge(0, 0)[500] {
-            Dim ID(0, 0) As Integer = ();
-            Dim X(0, 0) As Double = ();
-            Dim Y(0, 0) As Double = ();
-            Dim Layer(0, 0) As Integer = ();
-            Dim Direction(0, 0) As Double = ();
+            Dim ID(0, 0) As Integer = (0);
+            Dim X(0, 0) As Double = (0.0);
+            Dim Y(0, 0) As Double = (0.0);
+            Dim Layer(0, 0) As Integer = (0);
+            Dim Direction(0, 0) As Double = (0.0);
+            Dim home(0, 0) As Integer = ();
+            Dim people(0, 0) As Integer = ();
+            Dim strength(0, 0) As Integer = ();
+            Dim younglabor(0, 0) As Integer = ();
+            Dim youngcon(0, 0) As Integer = ();
+            Dim middlelabor(0, 0) As Integer = ();
+            Dim middlecon(0, 0) As Integer = ();
+            Dim oldlabor(0, 0) As Integer = ();
+            Dim oldcon(0, 0) As Integer = ();
+            Dim t_people(0, 0) As Integer = ();
+            Dim value(0, 0) As Double = ();
+            Dim totalvalue(0, 0) As Double = ();
+            Dim t_value(0, 0) As Integer = ();
+            Dim t_younglabor(0, 0) As Integer = ();
+            Dim t_youngcon(0, 0) As Integer = ();
+            Dim t_middlelabor(0, 0) As Integer = ();
+            Dim t_middlecon(0, 0) As Integer = ();
+            Dim t_oldlabor(0, 0) As Integer = ();
+            Dim t_oldcon(0, 0) As Integer = ();
+            Dim bridgecore(0, 0) As Integer = ();
         }
     }
     Dim hapsum(0, 0) As Integer = (0);
@@ -262,8 +283,6 @@ UNIVERSE {
     Dim olddist(0, 0) As Integer = (0);
     Dim totalpeople(0, 0) As Integer = (0);
     Dim t_value(0, 0) As Integer = (0);
-    Space newtriage(0,0),Square_2D(1000, 1000, Loop, North, 1, !Map_3D){
-    }
 }
 
 
@@ -5363,6 +5382,28 @@ Initial_Value {
     UNIVERSE.TRIAGE.NEWBRIDGE.Y = 500(50*50.0, 50*150.0, 50*250.0, 50*350.0, 50*450.0, 50*550.0, 50*650.0, 50*750.0, 50*850.0, 50*950.0);
     UNIVERSE.TRIAGE.NEWBRIDGE.LAYER = 500(500*0);
     UNIVERSE.TRIAGE.NEWBRIDGE.DIRECTION = 500(500*0.0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.HOME = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.PEOPLE = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.STRENGTH = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.YOUNGLABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.YOUNGCON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.MIDDLELABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.MIDDLECON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.OLDLABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.OLDCON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_PEOPLE = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.VALUE = 500(500*0.0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.TOTALVALUE = 500(500*0.0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_VALUE = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_YOUNGLABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_YOUNGCON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_MIDDLELABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_MIDDLECON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_OLDLABOR = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.T_OLDCON = 500(500*0);
+    UNIVERSE.TRIAGE.NEWBRIDGE.BRIDGECORE = 500(24*0, 1, 49*0, 1, 49*0, 1, 49*0, 1, 49*0, 1
+, 49*0, 1, 49*0, 1, 49*0, 1, 49*0, 1, 49*0, 1
+, 25*0);
 }
 
 
@@ -5394,6 +5435,7 @@ end if
 universe.hapsum = 0 universe.bridgestrength = 0 universe.salary = 0 universe.utilize = 0
 universe.totalvalue = 0
 universe.youngutilize = 0 universe.middleutilize = 0 universe.oldutilize = 0 universe.t_utilize = 0 universe.youngdist = 0 universe.middledist = 0 universe.olddist = 0
+universe.numberofbridge = 0
 }
 
 Univ_Step_End{
@@ -5640,17 +5682,18 @@ Agt_Step{
 //-------------------------------------------------------
 #begin_rule UNIVERSE.TRIAGE.GOVERNMENT
 Agt_Init{
-my.X = 50 my.Y = 50 my.Direction = rnd() * 360
+my.X = 500 my.Y = 500 my.Direction = rnd() * 360
 my.happy = 0  my.home = 0 my.age = 0 my.labor = false my.budget = 0 my.cost = 0 my.breakbridge = 0
+ClearAgtset(my.findcore)
 }
 Agt_Step{
-dim y as agtset dim m as agtset dim o as agtset dim human as agtset dim one as agt dim findbridge as agtset dim check as agt
+dim y as agtset dim m as agtset dim o as agtset dim human as agtset dim one as agt dim findbridge as agtset dim check as agt 
 dim iy as integer dim im as integer dim io as integer dim buildnum as integer dim alten as agt 
 //徴税シークエンス
 include"tax2010.inc"
 //橋の点検及び修理、破壊そして代替施設建造シークエンス
 //維持管理の時はbridgecheck1,長寿命化の時は2。そしてどっちもやる可能性があるときは3。33は変数を動かす。
-include"bridgecheck33.inc"
+include"bridgecheck.inc"
 }
 #end_rule UNIVERSE.TRIAGE.GOVERNMENT
 
@@ -5718,11 +5761,17 @@ universe.olddist = universe.olddist + my.dist
 //-------------------------------------------------------
 #begin_rule UNIVERSE.TRIAGE.NEWBRIDGE
 Agt_Init{
-my.home = 0 my.people =0 my.strength = 5000 my.younglabor = 0 my.youngcon = 0 my.middlelabor = 0 my.middlecon = 0 my.oldlabor = 0 my.oldcon = 0 my.t_people = 0 my.totalvalue = 0
+my.home = 0 my.people =0 my.strength = 5000 my.younglabor = 0 my.youngcon = 0 my.middlelabor = 0 my.middlecon = 0 my.oldlabor = 0 my.oldcon = 0 my.t_people = 0 my.totalvalue = 0 }
+Agt_Step{ my.t_people = my.t_people + my.people
+if getcountstep() Mod 250 == 0 then
+	my.t_people = 0
+end if
+my.value = 0
+include"valuetest.inc"
+universe.sumpeople = universe.sumpeople + my.people
+my.strength = my.strength - 1 - (my.people - gethistory(my.people, 1))
+universe.bridgestrength = universe.bridgestrength + my.strength
 }
-
-Agt_Step{
-
 }
 #end_rule UNIVERSE.TRIAGE.NEWBRIDGE
 
@@ -6630,13 +6679,13 @@ Time_Graph {
     Draw_Interval = 1;
     Graph_Name = "numberofbridge";
     Title = "numberofbridge";
-    Disable = Yes;
+    Disable = No;
     Background_Color = 255, 255, 255;
     Remarks = Yes;
     Legend_Pos = Top;
     FastDraw = No;
-    Position_x = 177;
-    Position_y = 210;
+    Position_x = 182;
+    Position_y = 97;
     Size_x = 715;
     Size_y = 576;
     Map_Cell_Size = -1;
@@ -6662,23 +6711,7 @@ Time_Graph {
 // Control Panel Definition Division
 //-------------------------------------------------------
 Control_Panel {
-    Display_Area = 1474, 331, 246, 124;
-    Panel_Item {
-        Item_Type = Slider;
-        Item_Name = "Bridge";
-        Display_Area = 0, 0, 0, 0;
-        Font_Name = "";
-        Font_Char_Set = 0;
-        Font_Size = 0.0;
-        Font_Style = 0;
-        Font_Color = 0, 0, 0;
-        Font_Background_Color = 0, 0, 0;
-        Var_Name = "Universe.bridgenum";
-        Slider_Range_Max = 9;
-        Slider_Value_Min = 1.0;
-        Slider_Value_Step = 1.0;
-        Slider_Value = "9";
-    }
+    Display_Area = 1550, 599, 246, 124;
 }
 
 
@@ -6706,7 +6739,7 @@ Others_Data {
     Console_Size_y = 659;
     Componen_Tree_Position_x = 10;
     Componen_Tree_Position_y = 8;
-    Componen_Tree_Size_x = 179;
+    Componen_Tree_Size_x = 328;
     Componen_Tree_Size_y = 549;
     Console_Background_Color = 16777215;
     Console_Foreground_Color = 255;
@@ -6754,8 +6787,8 @@ Space_Map_Initial_Value {
 // Window Location Definition Division
 //-------------------------------------------------------
 Window_Rectangle {
-    Window_Name = Main_Window, 827, 50, 1020, 879;
-    Window_Name = Output_Setting_Window, 270, 294, 480, 290;
+    Window_Name = Main_Window, 784, 58, 1278, 956;
+    Window_Name = Output_Setting_Window, 399, 333, 480, 290;
     Window_Name = Artisoc_Help_Window, 100, 150, 533, 400;
 }
 
