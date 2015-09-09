@@ -292,6 +292,23 @@ UNIVERSE {
 Initial_Value {
     UNIVERSE.HAPSUM = 1(0);
     UNIVERSE.BRIDGENUM = 1(500);
+    UNIVERSE.TRIAGE.YOUNG.X = 1000(1000*0.0);
+    UNIVERSE.TRIAGE.YOUNG.Y = 1000(1000*0.0);
+    UNIVERSE.TRIAGE.YOUNG.LAYER = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.DIRECTION = 1000(1000*0.0);
+    UNIVERSE.TRIAGE.YOUNG.HAPPY = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.HAPPINESS = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.HOME = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.LABOR = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.AGE = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.MONEY = 1000(1000*0.0);
+    UNIVERSE.TRIAGE.YOUNG.CONSUMPTION = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.FREE = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.UTILIZE = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.SALARY = 1000(1000*0.0);
+    UNIVERSE.TRIAGE.YOUNG.T_CONSUMPTION = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.T_FREE = 1000(1000*0);
+    UNIVERSE.TRIAGE.YOUNG.T_UTILIZE = 1000(1000*0);
     UNIVERSE.TRIAGE.HOMEO.X = 100(100*0.0);
     UNIVERSE.TRIAGE.HOMEO.Y = 100(100*0.0);
     UNIVERSE.TRIAGE.HOMEO.LAYER = 100(100*0);
@@ -5478,7 +5495,7 @@ println(getcountsimulationnumber())
 #begin_rule UNIVERSE.TRIAGE.YOUNG
 Agt_Init{ my.X = rnd() * 800 + 800
 my.Y = rnd() * 1000
-my.Direction = 0 
+my.Direction = 180
 my.happy = 0 my.t_consumption = 0 my.t_free = 0
 my.home = 0 my.age = 1 my.money = 1000000
 if rnd() < 0.6974 then
@@ -6679,7 +6696,7 @@ Time_Graph {
     Draw_Interval = 1;
     Graph_Name = "numberofbridge";
     Title = "numberofbridge";
-    Disable = No;
+    Disable = Yes;
     Background_Color = 255, 255, 255;
     Remarks = Yes;
     Legend_Pos = Top;
@@ -6787,7 +6804,7 @@ Space_Map_Initial_Value {
 // Window Location Definition Division
 //-------------------------------------------------------
 Window_Rectangle {
-    Window_Name = Main_Window, 784, 58, 1278, 956;
+    Window_Name = Main_Window, 784, 57, 1278, 956;
     Window_Name = Output_Setting_Window, 399, 333, 480, 290;
     Window_Name = Artisoc_Help_Window, 100, 150, 533, 400;
 }
